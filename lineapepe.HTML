@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LineaPEPE</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+</head>
+<body>
+  <!-- Your HTML content here -->
+  <button onclick="mintTokens()">Mint Tokens</button>
+
+  <button onclick="connectWallet()">Connect Wallet</button>
+
+<script>
+  // Function to connect wallet
+  async function connectWallet() {
+    try {
+      // Request user's wallet address
+      const accounts = await web3.eth.requestAccounts();
+      const userAddress = accounts[0];
+
+      // Do something with the user's wallet address
+      console.log('Connected wallet:', userAddress);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
+</script>
+
+  <script>
+    
+    // Connect to Ethereum network using Web3.js
+    const web3 = new Web3(Web3.givenProvider);
+
+    // Contract address and ABI
+    const contractAddress = '0x2C94685CCDB77B48Bb55EAEFfCfB4f56bDDDf8Dd';
+    const contractABI = [
+    {
+  "inputs": [],
+  "name": "mint",
+  "outputs": [],
+  "stateMutability": "payable",
+  "type": "function"
+}
+    ];
+
+    // Function to mint tokens
+    async function mintTokens() {
+      try {
+        // Get user's wallet address
+        const accounts = await web3.eth.requestAccounts();
+        const userAddress = accounts[0];
+
+        // Create contract instance
+        const contract = new web3.eth.Contract(contractABI, contractAddress);
+
+        // Call the mint function
+        const result = await contract.methods.mint().send({ from: userAddress });
+
+        // Handle the transaction result
+        console.log('Transaction successful:', result);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    }
+  </script>
+</body>
+</html>
